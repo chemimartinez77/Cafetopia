@@ -12,6 +12,9 @@ const socket = io();
 // Array para almacenar las referencias de los textos de los jugadores
 const playerTexts = [];
 
+// Definir las posiciones horizontales de las columnas
+const columnXPositions = [10, 210];
+
 // Crear un botón con recuadro en PixiJS
 const button = new PIXI.Container();
 
@@ -33,7 +36,10 @@ socket.on('player_data', (players) => {
             fill: 'white',
             fontSize: 18,
         });
-        playerText.position.set(10, 30 + index * 60);
+
+        // Calcular la posición horizontal basada en el jugador
+        const columnX = columnXPositions[index % columnXPositions.length];
+        playerText.position.set(columnX, 30 + Math.floor(index / columnXPositions.length) * 180);
         app.stage.addChild(playerText);
         playerTexts.push(playerText);
 
@@ -41,7 +47,7 @@ socket.on('player_data', (players) => {
             fill: 'white',
             fontSize: 18,
         });
-        goldText.position.set(10, 60 + index * 60);
+        goldText.position.set(columnX, 60 + Math.floor(index / columnXPositions.length) * 180);
         app.stage.addChild(goldText);
         playerTexts.push(goldText);
 
@@ -49,7 +55,7 @@ socket.on('player_data', (players) => {
             fill: 'white',
             fontSize: 18,
         });
-        coffeeBeansText.position.set(10, 90 + index * 60);
+        coffeeBeansText.position.set(columnX, 90 + Math.floor(index / columnXPositions.length) * 180);
         app.stage.addChild(coffeeBeansText);
         playerTexts.push(coffeeBeansText);
 
@@ -57,7 +63,7 @@ socket.on('player_data', (players) => {
             fill: 'white',
             fontSize: 18,
         });
-        groundCoffeeText.position.set(10, 120 + index * 60);
+        groundCoffeeText.position.set(columnX, 120 + Math.floor(index / columnXPositions.length) * 180);
         app.stage.addChild(groundCoffeeText);
         playerTexts.push(groundCoffeeText);
     });
